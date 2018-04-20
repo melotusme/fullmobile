@@ -3,7 +3,7 @@ import {ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-nativ
 
 type Props = {};
 url = "http://45.78.19.188:8899/api/articles/";
-export default class ArticleList extends Component<Props> {
+export default class ArticleListScreen extends Component<Props> {
     state = {
         loading: true,
         error: false,
