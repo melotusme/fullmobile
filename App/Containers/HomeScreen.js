@@ -1,5 +1,6 @@
 import React from 'react';
-import {AsyncStorage, Button, StyleSheet, View} from 'react-native';
+import {AsyncStorage, StyleSheet, ToastAndroid, View} from 'react-native';
+import Button from '../Components/Button';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -9,14 +10,17 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title="登出" onPress={this._signOutAsync}></Button>
-                <Button title="阅读" onPress={this._getArticlesAsync}></Button>
+                <View>
+                    <Button text="登出" onPress={this._signOutAsync}></Button>
+                    <Button text="阅读" onPress={this._getArticlesAsync}></Button>
+                </View>
             </View>
         );
     }
 
     _signOutAsync = async () => {
         await AsyncStorage.clear();
+        ToastAndroid.show("登出成功", ToastAndroid.SHORT);
         this.props.navigation.navigate("Auth");
     };
 
