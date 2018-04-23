@@ -18,7 +18,7 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={sytles.items}>
+                <View style={styles.items}>
                     <Button text="登出" onPress={this._signOutAsync}></Button>
                     <Button text="阅读" onPress={this._getArticlesAsync}></Button>
                 </View>
@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
     },
     items: {
         flex: 1,
-        
+        flexDirection: 'row'
     }
 });

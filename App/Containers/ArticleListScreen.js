@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {TouchableOpacity, FlatList, ActivityIndicator, ScrollView, StyleSheet, Text, View} from 'react-native';
 
-type Props = {};
 url = "http://45.78.19.188:8899/api/articles/";
-export default class ArticleListScreen extends Component<Props> {
+const extractKey = ({item}) => item.id;
+export default class ArticleListScreen extends Component {
     state = {
         loading: true,
         error: false,
@@ -20,26 +20,29 @@ export default class ArticleListScreen extends Component<Props> {
         }
     };
 
-    renderArticle = ({id, title, body}, i) => {
+    renderItem = ({item}) => {
         return (
-            <View
-                key={id}
-                style={styles.article}>
-                <View style={styles.articleNumber}>
-                    <Text>
-                        {i + 1}
-                    </Text>
+            <TouchableOpacity key={item} onPress={() => {
+                this.props.navigation.navigate('ArticleDetail', {article: item});
+            }}>
+                <View
+                    style={styles.article}
+                >
+                    <View style={styles.articleNumber}>
+                        <Text>
+                            {item.id}
+                        </Text>
+                    </View>
+                    <View style={styles.articleContent}>
+                        <Text>
+                            {item.title}
+                        </Text>
+                        <Text style={styles.articleBody}>
+                            {item.body.substring(0, 80)}
+                        </Text>
+                    </View>
                 </View>
-                <View style={styles.articleContent}>
-                    <Text>
-                        {title}
-                    </Text>
-                    <Text style={styles.articleBody}>
-                        {body}
-                    </Text>
-                </View>
-
-            </View>
+            </TouchableOpacity>
         );
     };
 
@@ -62,9 +65,12 @@ export default class ArticleListScreen extends Component<Props> {
             );
         }
         return (
-            <ScrollView style={styles.container}>
-                {articles.map(this.renderArticle)}
-            </ScrollView>
+            <FlatList style={styles.container}
+                      data={articles}
+                      renderItem={this.renderItem}
+                      keyExtrator={extractKey}
+            >
+            </FlatList>
         );
     }
 }
